@@ -2,6 +2,7 @@ import Order from "../model/orderModel.js";
 import User from "../model/userModel.js";
 import razorpay from 'razorpay'
 import dotenv from 'dotenv'
+import {getDiscountForCity} from '../config/discountRules.js'
 dotenv.config()
 const currency = 'inr'
 const razorpayInstance = new razorpay({
@@ -9,7 +10,6 @@ const razorpayInstance = new razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET
 })
 
-// for User
 export const placeOrder = async (req,res) => {
 
      try {

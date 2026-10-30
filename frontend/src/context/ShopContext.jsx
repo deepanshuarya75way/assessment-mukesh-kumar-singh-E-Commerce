@@ -17,6 +17,22 @@ function ShopContext({children}) {
     let currency = '₹';
     let delivery_fee = 40;
 
+
+    // Discount rules by delivery city 
+
+    const discountRules = {
+      mumbai : 10,
+      delhi : 15,
+      bangalore : 12,
+      chennai : 8,
+      hyderabad : 10
+    }
+
+    const getDiscountPercentage = (cityName) =>{
+      if(!cityName || typeof cityName != 'string') return 0;
+      return discountRules[cityName.trim().toLowerCase()] || 0;
+    }
+  
     const getProducts = async () => {
         try {
             let result = await axios.get(serverUrl + "/api/product/list")
@@ -146,10 +162,8 @@ function ShopContext({children}) {
 
 
 
-
-
     let value = {
-      products, currency , delivery_fee,getProducts,search,setSearch,showSearch,setShowSearch,cartItem, addtoCart, getCartCount, setCartItem ,updateQuantity,getCartAmount,loading
+      products, currency , delivery_fee,getProducts,search,setSearch,showSearch,setShowSearch,cartItem, addtoCart, getCartCount, setCartItem ,updateQuantity,getCartAmount,loading,getDiscountPercentage , discountRules
     }
   return (
     <div>
